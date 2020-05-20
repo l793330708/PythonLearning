@@ -1,4 +1,5 @@
 import numpy as np
+
 def createDataSet():
     groups = np.array([[1.0,1.2],[1.2,1.2],[0.1,0.2],[0.1,0.1]])
     labels = ['A','A','B','B']
