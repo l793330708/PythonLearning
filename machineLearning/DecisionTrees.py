@@ -24,7 +24,7 @@ def calShannonEnt(dataSet):
         lableCounts[currentLable] = lableCounts.get(currentLable,0)+1
     shannonEnt = 0.
     for key in lableCounts:
-        prob = float(lableCounts[key])/numEntries
+        prob = float(lableCounts[key])/numEntries ##计算Pi概率
         shannonEnt -= prob * np.log2(prob) #核心公式
     return shannonEnt
 myDat,labels = createDataSet()
