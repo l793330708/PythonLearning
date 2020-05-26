@@ -12,7 +12,7 @@ def sigmoid(x):
 def derivatives_sigmoid(x):
     return x*(1-x)
 #Variable intialization
-epoch = 50 #traning rounds
+epoch = 50000 #traning rounds
 lr = 0.1 # learning rate
 inputlayer_neurons = X.shape[1] #3个
 hiddenlayer_neurons = 3
@@ -48,11 +48,11 @@ for i in range(epoch):
     wh += torch.mm(X.t(),d_hiddenlayer)*lr
     bh += d_output.sum()*lr
 
-model = torch.nn.Sequential(
-    torch.nn.Linear(inputlayer_neurons, hiddenlayer_neurons),
-    torch.nn.ReLU(),
-    torch.nn.Linear(hiddenlayer_neurons,output_neurons),
-)
+# model = torch.nn.Sequential(
+#     torch.nn.Linear(inputlayer_neurons, hiddenlayer_neurons),
+#     torch.nn.ReLU(),
+#     torch.nn.Linear(hiddenlayer_neurons,output_neurons),
+# )
 loss_fn = torch.nn.CrossEntropyLoss()
 print('actual:\n',Y)
 print('predicted:\n',output)

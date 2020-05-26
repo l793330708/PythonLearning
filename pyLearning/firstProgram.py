@@ -1,3 +1,3 @@
-import numpy as np
-a = np.eye(4)
-print(a)
+dict = {'Name': 'Zara', 'Age': 7}
+a =list(dict.keys())
+print ("Value : %s" %  a)
