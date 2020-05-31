@@ -93,21 +93,21 @@ def majorityCnt(classList):
 def createTree(dataSet,labels):
     classList = []
     for example in dataSet:
-        classList.append(example[-1])
-    if classList.count(classList[0]) ==len(classList):
+        classList.append(example[-1]) ##插入TraningSet的分类标签
+    if classList.count(classList[0]) ==len(classList): ##种类相同返回
         return classList[0]
-    if len(dataSet[0]) == 1:
+    if len(dataSet[0]) == 1: ##使用完所有的标签类别任不统一，返回多数
         return majorityCnt(classList)
     bestFeat = chooseBestFeatureToSplit(dataSet)
     bestFeatLabel = labels[bestFeat]
     myTree = {bestFeatLabel:{}}
     del(labels[bestFeat])
-    featValues = []
+    featValues = [] ##统计bestFeatLabel内的Value
     for example in dataSet:
         featValues.append(example[bestFeat])
         uniqueVals = set(featValues)
-        for value in uniqueVals:
-            sublabels = labels[:]
+        for value in uniqueVals: ##划分数据集
+            sublabels = labels[:] ##保存当前labels
             myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet,bestFeat,value),sublabels)
     return myTree
 myDat,labels = createDataSet()
