@@ -5,17 +5,23 @@ def createDataSet():
     模拟数据集，分类
     :return:
     '''
-    dataSet = [[1,1,'yes'],
-               [1,1,'yes'],
-               [1,0,'no'],
-               [0,1,'no'],
-               [0,1,'no']]
-    labels = ['no surfacing','flippers']
+    # dataSet = [[1,1,'yes'],
+    #            [1,1,'yes'],
+    #            [1,0,'no'],
+    #            [0,1,'no'],
+    #            [0,1,'no']]
+    # labels = ['no surfacing','flippers']
+    # 来个西瓜
+    dataSet = [['青绿','蜷缩','浊响','是'],
+               ['乌黑','蜷缩','浊响','是'],
+               ['青绿','硬挺','清脆','否'],
+               ['乌黑','稍蜷','沉闷','否']]
+    labels = ['色泽','根蒂','敲声']
     return dataSet,labels
 def calShannonEnt(dataSet):
     '''
     计算香农信息熵
-    :param dataSet:数据集
+    :param dataSet:数据集，要求最后一列为对应分类
     :return:
     '''
     numEntries = len(dataSet) ##计算数据集总数
@@ -28,14 +34,11 @@ def calShannonEnt(dataSet):
         prob = float(lableCounts[key])/numEntries ##计算Pi概率
         shannonEnt -= prob * np.log2(prob) #核心公式
     return shannonEnt
-# myDat,labels = createDataSet()
-# ShannonEnt = calShannonEnt(myDat) ##熵越高，混合数据越多，即度量集合的无序程度
-# print(ShannonEnt)
 
 #按照特征值划分数据集
 def splitDataSet(dataSet,axis,value):
     """
-
+    划分数据集，返回列表
     :param dataSet:数据集
     :param axis: 划分数据集的列
     :param value: 返回的
@@ -52,28 +55,25 @@ def splitDataSet(dataSet,axis,value):
 #选择最好的划分方式
 def chooseBestFeatureToSplit(dataSet):
     '''
-
+    信息增益计算 infoGain判定BestFeature
     :param dataSet:传入的list，每一项最后一列为label，前面均为特征向量
     :return:
     '''
     numFeatures = len(dataSet[0])-1 ##计算特征数量
     baseEntropy = calShannonEnt(dataSet) ##初始香农熵
     bestInfoGain = 0.
-    bestFeature = -1 ##当不满足时不再划分
+    bestFeature = -1 ##当不满足时不再划分,信息增益为0即划分的是两个互斥事件
     for i in range(numFeatures):
         featList = [] #特征集合
         for e in dataSet:
-            for j in range(numFeatures):
-                featList.append(e[j]) ##加入特征值集合
-        # print(featList)
+            featList.append(e[i]) ##加入特征值集合
         uniqueVals = set(featList)
-        # print(uniqueVals)
         newEntropy = 0.
         for value in uniqueVals:
             subDataset = splitDataSet(dataSet,i,value) ##分别划分数据集
             prob = len(subDataset)/float(len(dataSet)) ##计算概率
-            newEntropy += prob * calShannonEnt(subDataset)
-        infoGain = baseEntropy - newEntropy
+            newEntropy += prob * calShannonEnt(subDataset) ##信息增益计算
+        infoGain = baseEntropy - newEntropy ##infoGain的值>=0
         if(infoGain > bestInfoGain): ##擂台法
             bestInfoGain = infoGain
             bestFeature = i
@@ -110,10 +110,11 @@ def createTree(dataSet,labels):
             sublabels = labels[:]
             myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet,bestFeat,value),sublabels)
     return myTree
-# myDat,labels = createDataSet()
-# myTree = createTree(myDat,labels)
+myDat,labels = createDataSet()
+myTree = createTree(myDat,labels)
+print(myTree)
 import  matplotlib.pyplot as plt
-
+# Draw Trees
 decisionNode = dict(boxstyle='sawtooth',fc='0.8')
 leafNode = dict(boxstyle='round4',fc='0.8')
 arrow_args = dict(arrowstyle='<-')
@@ -154,9 +155,10 @@ def getTreeDepth(myTree):
 # myTree =createTree(myDat,labels)
 # print(myTree)
 def retrieveTree(i):
-    listOfTrees=[{'no surfacing':{0:'no',1:{'flippers':{0:'no',1:'yes'}}}},
-                 {'no surfacing':{0:'no',1:{'flippers':{0:{'head':{0:'no',1:'yes'}},1:'no'}}}}
-                 ]
+    # listOfTrees=[{'no surfacing':{0:'no',1:{'flippers':{0:'no',1:'yes'}}}},
+    #              {'no surfacing':{0:'no',1:{'flippers':{0:{'head':{0:'no',1:'yes'}},1:'no'}}}}
+    #              ]
+    listOfTrees = [{'根蒂': {'蜷缩': '是', '硬挺': '否', '稍蜷': '否'}}]
     return listOfTrees[i]
 
 # myTree = retrieveTree(0)
@@ -196,7 +198,7 @@ def createPlot(inTree):
     plotTree.yOff = 1.0
     plotTree(inTree,(0.5,1.0),'')
     plt.show()
-myDat,labels = createDataSet()
-myTree =createTree(myDat,labels)
-createPlot(myTree)
+# myDat,labels = createDataSet()
+# myTree =createTree(myDat,labels)
+# createPlot(myTree)
                      
