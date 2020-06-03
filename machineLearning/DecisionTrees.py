@@ -1,5 +1,7 @@
 import numpy as np
 import operator
+
+
 def createDataSet():
     '''
     模拟数据集，分类
@@ -18,6 +20,8 @@ def createDataSet():
                ['乌黑','稍蜷','沉闷','否']]
     labels = ['色泽','根蒂','敲声']
     return dataSet,labels
+
+
 def calShannonEnt(dataSet):
     '''
     计算香农信息熵
@@ -107,19 +111,22 @@ def createTree(dataSet,labels):
         sublabels = labels[:]
         myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet,bestFeat,value),sublabels)
     return myTree
-myDat,labels = createDataSet()
-myTree = createTree(myDat,labels)
-print(myTree)
+
 import  matplotlib.pyplot as plt
 # Draw Trees
 decisionNode = dict(boxstyle='sawtooth',fc='0.8')
 leafNode = dict(boxstyle='round4',fc='0.8')
 arrow_args = dict(arrowstyle='<-')
 
+
+
 def plotNode(nodeTxt,centerPt,parentPt,nodeType):
     createPlot.ax1.annotate(nodeTxt,xy=parentPt,xycoords='axes fraction',xytext=centerPt,\
                  textcoords='axes fraction',va='center',ha='center',bbox=nodeType,\
             arrowprops=arrow_args)
+
+
+
 def createPlot():
     fig = plt.figure(1,facecolor='white')
     fig.clf()
@@ -128,6 +135,8 @@ def createPlot():
     plotNode(U'leaf node',(0.8,0.1),(0.3,0.8),leafNode)
     plt.show()
 # createPlot()
+
+
 def getNumLeafs(myTree):
     numLeafs = 0
     firstStr = list(myTree.keys())
@@ -138,6 +147,9 @@ def getNumLeafs(myTree):
         else:
             numLeafs +=1
     return numLeafs
+
+
+
 def getTreeDepth(myTree):
     maxDepth = 0
     firstStr = list(myTree.keys())
@@ -148,9 +160,9 @@ def getTreeDepth(myTree):
         else:thisDepth = 1
         if thisDepth>maxDepth:maxDepth = thisDepth
     return maxDepth
-# myDat,labels = createDataSet()
-# myTree =createTree(myDat,labels)
-# print(myTree)
+
+
+
 def retrieveTree(i):
     # listOfTrees=[{'no surfacing':{0:'no',1:{'flippers':{0:'no',1:'yes'}}}},
     #              {'no surfacing':{0:'no',1:{'flippers':{0:{'head':{0:'no',1:'yes'}},1:'no'}}}}
@@ -158,14 +170,15 @@ def retrieveTree(i):
     listOfTrees = [{'根蒂': {'蜷缩': '是', '硬挺': '否', '稍蜷': '否'}}]
     return listOfTrees[i]
 
-# myTree = retrieveTree(0)
-# a= getNumLeafs(myTree)
-# b = getTreeDepth(myTree)
-# print(a,b)
+
+
 def plotMidText(cntrPt,parentPt,txtString):
     xMid = (parentPt[0]-cntrPt[0])/2.0 + cntrPt[0]
     yMid = (parentPt[1]-cntrPt[1])/2.0 +cntrPt[1]
     createPlot.ax1.text(xMid,yMid,txtString,va='center',ha='center',rotation=30)
+
+
+
 def plotTree(myTree,parentPt,nodeTxt):
     numleafs = getNumLeafs(myTree)
     depth = getTreeDepth(myTree)
@@ -184,6 +197,9 @@ def plotTree(myTree,parentPt,nodeTxt):
             plotNode(secondDict[key],(plotTree.xOff,plotTree.yOff),cntrPt,leafNode)
             plotMidText((plotTree.xOff,plotTree.yOff),cntrPt,str(key))
         plotTree.yOff = plotTree.yOff + 1.0/plotTree.totalD
+
+
+
 def createPlot(inTree):
     fig = plt.figure(1,facecolor='white')
     fig.clf()
@@ -195,7 +211,5 @@ def createPlot(inTree):
     plotTree.yOff = 1.0
     plotTree(inTree,(0.5,1.0),'')
     plt.show()
-# myDat,labels = createDataSet()
-# myTree =createTree(myDat,labels)
-# createPlot(myTree)
+
                      
