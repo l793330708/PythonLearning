@@ -27,7 +27,6 @@ def auto2Norm(dataMat):
     return dataMat
 # auto2Norm(dataMat)
 
-import matplotlib
 import matplotlib.pyplot as plt
 def drawScatter():
     fig = plt.figure()
