@@ -64,10 +64,4 @@ def kNNclassifier(dataMat,labelMat):
         errorRate = ec / float(dataLen - index)
         print("The error rate is %f,and K is %d" % (errorRate, K))
 
-
 kNNclassifier(dataMat,labelMat)
-
-
-
-
-getSourceMat("E:\\MLiA_SourceCode\\machinelearninginaction\\Ch02\\datingTestSet2.txt")
