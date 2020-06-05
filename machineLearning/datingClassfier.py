@@ -36,7 +36,7 @@ def drawScatter():
 # drawScatter()
 def kNNclassifier(dataMat,labelMat):
     for K in range(3,8):
-        testRitio = 0.5
+        testRitio = 0.8
         dataLen = np.shape(dataMat)[0]
         dataMat = auto2Norm(dataMat)
         index = int(dataLen*testRitio)
