@@ -5,7 +5,7 @@ def createDataSet():
     labels = ['A','A','B','B']
     return groups,labels
 #获取数据集
-groups,labels = createDataSet()
+# groups,labels = createDataSet()
 
 def classifier(inX,dataSet,labels,k):
     '''
@@ -28,7 +28,7 @@ def classifier(inX,dataSet,labels,k):
     for i in range(k):
         lablename = labels[sortIdx[i]]
         classCount[lablename] = classCount.get(lablename,0)+1
-    rs = max(classCount,key = classCount.get(1))
+    rs = max(classCount)
     return rs
-rs = classifier([0,0],groups,labels,3)
-print(rs)
+# rs = classifier([0,0],groups,labels,3)
+# print(rs)
