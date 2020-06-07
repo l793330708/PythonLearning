@@ -1,6 +1,6 @@
 import numpy as np
 import os
-
+# from machineLearning import kNN
 
 def getDataSource(DirPath):
     dirs = os.listdir(DirPath)
@@ -24,20 +24,21 @@ trainingDataMat, traininglabelMat = getDataSource("E:\\MLiA_SourceCode\\machinel
 testDataMat, testLabelMat = getDataSource("E:\\MLiA_SourceCode\\machinelearninginaction\\Ch02\\testDigits")
 
 def testKnn():
-    for K in range(3,7):
-        lens = np.shape(trainingDataMat)[0]
+    lens = np.shape(trainingDataMat)[0]
+    for K in range(1,5):
         lens_1 = len(testLabelMat)
         ec =0.
         count = 0
         for example in testDataMat:
+            # rsLabel = kNN.classifier(example,trainingDataMat,traininglabelMat,K)
             exampleMat = np.tile(example, (lens, 1))
-            distantMat = np.sum(np.power((exampleMat - trainingDataMat),2),axis=1)
+            distantMat = np.square((exampleMat - trainingDataMat)).sum(axis=1)
             distantMat = np.sqrt(distantMat)
             sortMat = list(np.argsort(distantMat))
             classCount = {}
             for k in range(K):
             #提取相应分类
-                labelname = traininglabelMat[sortMat.index(k)]
+                labelname = traininglabelMat[sortMat[k]]
                 classCount[labelname] = classCount.get(labelname,0)+1
             rsLabel = max(classCount)
             # print("the classifier result is %d,the real is %d" % (rsLabel,testLabelMat[count]))
@@ -45,7 +46,5 @@ def testKnn():
                 ec += 1.0
             count += 1
         # print(count,testLabelMat[count])
-        print("the error rate is %f,K is %d" % (ec/float(lens_1),K
-
-                                                ))
-# testKnn()
+        print("the error rate is %f,K is %d" % (ec/float(lens_1),K))
+testKnn()
