@@ -94,7 +94,7 @@ def retrieveTree(i):
                    {'no surfacing': {0: 'no', 1: {'flippers': {0: {'head': {0: 'no', 1: 'yes'}}, 1: 'no'}}}}
                    ]
     return listOfTrees[i]
-myDat,labels = DecisionTrees.createDataSet()
-thisTree = DecisionTrees.createTree(myDat,labels)
-
-createPlot(thisTree)
+# myDat,labels = DecisionTrees.createDataSet()
+# thisTree = DecisionTrees.createTree(myDat,labels)
+#
+# createPlot(thisTree)
