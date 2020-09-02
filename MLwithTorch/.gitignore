@@ -1,3 +1,4 @@
 /data/*
-/minis_data/*
-cifar*`
+/minst_data/*
+cifar*
+.ipy*`
